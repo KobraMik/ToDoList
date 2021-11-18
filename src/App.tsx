@@ -23,6 +23,7 @@ function App() {
             <Todolist title="Songs" tasks={tasks2} />
             <Todolist title="Songs" tasks={tasks2} />
             <Todolist title="Songs" tasks={tasks2} />
+            <Todolist title="Songs" tasks={tasks2} />
         </div>
     );
 }
