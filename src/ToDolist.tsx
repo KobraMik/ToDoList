@@ -18,14 +18,14 @@ export function Todolist(props: PropsType) {
         <h3>{props.title}</h3>
         <div>
             <input/>
-            <button>+</button>
+            <button>X</button>
         </div>
         {props.tasks.map(m => {
             return (
                 <li key={m.id}>
                     <input type="checkbox" checked={m.isDone}/>
                     <span>{m.title}</span>
-                    <button onClick={() => props.minusTask(m.id)}>+</button>
+                    <button onClick={() => props.minusTask(m.id)}>X</button>
                 </li>
             )
         })}
