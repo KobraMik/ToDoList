@@ -10,7 +10,7 @@ type PropsType = {
     title: string
     tasks: Array<TaskType>
     minusTask: (id:number) => void
-    setFilter: (value: string) => void
+    setFilterFilter: (value: string) => void
 }
 
 export function Todolist(props: PropsType) {
@@ -18,21 +18,21 @@ export function Todolist(props: PropsType) {
         <h3>{props.title}</h3>
         <div>
             <input/>
-            <button>X</button>
         </div>
         {props.tasks.map(m => {
             return (
                 <li key={m.id}>
-                    <input type="checkbox" checked={m.isDone}/>
+                    <input type="checkbox"
+                           checked={m.isDone}/>
                     <span>{m.title}</span>
                     <button onClick={() => props.minusTask(m.id)}>X</button>
                 </li>
             )
         })}
         <div>
-            <button onClick={() => props.setFilter('All')}>All</button>
-            <button onClick={() => props.setFilter('Active')}>Active</button>
-            <button onClick={() => props.setFilter('Completed')}>Completed</button>
+            <button onClick={() => props.setFilterFilter('All')}>All</button>
+            <button onClick={() => props.setFilterFilter('Active')}>Active</button>
+            <button onClick={() => props.setFilterFilter('Completed')}>Completed</button>
         </div>
     </div>
 }

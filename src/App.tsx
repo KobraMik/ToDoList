@@ -15,10 +15,10 @@ function App() {
         setTasks1(tasks1.filter(f => f.id !== id))
     }
 
-    let [filter, setMyFilter] = useState('')
+    let [filter, setFilterFilter] = useState('')
 
     const setFilter = (value: string) => {
-        setMyFilter(value)
+        setFilterFilter(value)
     }
 
     let newTasks = tasks1;
@@ -34,7 +34,7 @@ function App() {
             <Todolist title="What to learn"
                       tasks={newTasks}
                       minusTask={removeTask}
-                      setFilter={setFilter}
+                      setFilterFilter={setFilter}
             />
         </div>
     );
