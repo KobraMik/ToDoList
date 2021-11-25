@@ -15,11 +15,7 @@ function App() {
         setTasks1(tasks1.filter(f => f.id !== id))
     }
 
-    let [filter, setFilterFilter] = useState('')
-
-    const setFilter = (value: string) => {
-        setFilterFilter(value)
-    }
+    let [filter, setMyFilter] = useState<'All'|'Active'|'Completed'>('All')
 
     let newTasks = tasks1;
     // newTasks = filter === 'All' ? tasks1:filter === 'Active' ? tasks1.filter(f=>!f.isDone):filter==='Completed' ? tasks1.filter(f=>f.isDone):tasks1
@@ -34,7 +30,7 @@ function App() {
             <Todolist title="What to learn"
                       tasks={newTasks}
                       minusTask={removeTask}
-                      setFilterFilter={setFilter}
+                      setFilters={setMyFilter}
             />
         </div>
     );

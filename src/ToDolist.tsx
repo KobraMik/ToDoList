@@ -10,7 +10,7 @@ type PropsType = {
     title: string
     tasks: Array<TaskType>
     minusTask: (id:number) => void
-    setFilterFilter: (value: string) => void
+    setFilters: (value: 'All' | 'Active' | 'Completed') => void
 }
 
 export function Todolist(props: PropsType) {
@@ -30,9 +30,9 @@ export function Todolist(props: PropsType) {
             )
         })}
         <div>
-            <button onClick={() => props.setFilterFilter('All')}>All</button>
-            <button onClick={() => props.setFilterFilter('Active')}>Active</button>
-            <button onClick={() => props.setFilterFilter('Completed')}>Completed</button>
+            <button onClick={() => props.setFilters('All')}>All</button>
+            <button onClick={() => props.setFilters('Active')}>Active</button>
+            <button onClick={() => props.setFilters('Completed')}>Completed</button>
         </div>
     </div>
 }
