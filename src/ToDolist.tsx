@@ -1,5 +1,7 @@
 import React, {useState, ChangeEvent, KeyboardEvent} from 'react';
 
+export type filterValueType = 'All' | 'Active' | 'Completed'
+
 type TaskType = {
     id: string
     title: string
@@ -10,11 +12,12 @@ type PropsType = {
     title: string
     tasks: Array<TaskType>
     minusTask: (id: string) => void
-    setFilters: (value: 'All' | 'Active' | 'Completed') => void
+    setFilters: (value: filterValueType) => void
     plusTask: (title: string) => void
 }
 
 export function Todolist(props: PropsType) {
+
     const [title, setTitle] = useState('')
 
     const addTaskHadler = () => {
@@ -32,6 +35,13 @@ export function Todolist(props: PropsType) {
         }
     }
 
+    const tsarChangeHandler = (value: filterValueType) => {
+        props.setFilters(value)
+    }
+
+    const minusTaskHandler = (id: string) => {
+        props.minusTask(id)
+    }
 
     return <div>
         <h3>{props.title}</h3>
@@ -47,14 +57,17 @@ export function Todolist(props: PropsType) {
                     <input type="checkbox"
                            checked={m.isDone}/>
                     <span>{m.title}</span>
-                    <button onClick={() => props.minusTask(m.id)}>X</button>
+                    <button onClick={() => minusTaskHandler(m.id)}>X</button>
+                    {/*<button onClick={() => props.minusTask(m.id)}>X</button>*/}
                 </li>
             )
         })}
         <div>
-            <button onClick={() => props.setFilters('All')}>All</button>
-            <button onClick={() => props.setFilters('Active')}>Active</button>
-            <button onClick={() => props.setFilters('Completed')}>Completed</button>
+            <button onClick={() => tsarChangeHandler('All')}>All</button>
+            <button onClick={() => tsarChangeHandler('Active')}>Active</button>
+            <button onClick={() => tsarChangeHandler('Completed')}>Completed</button>
+            {/*<button onClick={() => props.setFilters('All')}>All</button>*/}
+
         </div>
     </div>
 }

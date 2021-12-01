@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './App.css';
-import {Todolist} from './ToDolist';
+import {filterValueType, Todolist} from './ToDolist';
 import {v1} from "uuid";
 
 
@@ -21,7 +21,7 @@ function App() {
         setTasks([newTask, ...tasks])
     }
 
-    let [filter, setMyFilter] = useState<'All' | 'Active' | 'Completed'>('All')
+    let [filter, setMyFilter] = useState<filterValueType>('All')
 
     let newTasks = tasks;
     // newTasks = filter === 'All' ? tasks1:filter === 'Active' ? tasks1.filter(f=>!f.isDone):filter==='Completed' ? tasks1.filter(f=>f.isDone):tasks1
