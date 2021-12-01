@@ -1,4 +1,4 @@
-import React, {useState, ChangeEvent} from 'react';
+import React, {useState, ChangeEvent, KeyboardEvent} from 'react';
 
 type TaskType = {
     id: string
@@ -19,16 +19,26 @@ export function Todolist(props: PropsType) {
 
     const addTaskHadler = () => {
         props.plusTask(title)
+        setTitle('')
     }
 
     const onChangeHadler = (event: ChangeEvent<HTMLInputElement>) => {
         setTitle(event.currentTarget.value)
     }
 
+    const onKeyPressHadler = (event: KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            addTaskHadler()
+        }
+    }
+
+
     return <div>
         <h3>{props.title}</h3>
         <div>
-            <input onChange={onChangeHadler}/>
+            <input onChange={onChangeHadler}
+                   value={title}
+                   onKeyPress={onKeyPressHadler}/>
             <button onClick={addTaskHadler}>+</button>
         </div>
         {props.tasks.map(m => {
