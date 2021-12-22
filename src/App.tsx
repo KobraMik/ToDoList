@@ -12,6 +12,14 @@ function App() {
         {id: v1(), title: "ReactJS", isDone: false},
     ])
 
+    function changeStatus(taskId: string, isDone: boolean) {
+        let task = tasks.find(t => t.id === taskId)
+        if (task) {
+            task.isDone = isDone;
+        }
+        setTasks([...tasks])
+    }
+
     const removeTask = (id: string) => {
         setTasks(tasks.filter(f => f.id !== id))
     }
@@ -19,6 +27,10 @@ function App() {
     const addTask = (title: string) => {
         let newTask = {id: v1(), title: title, isDone: false}
         setTasks([newTask, ...tasks])
+    }
+
+    const changeStatusCheckBox = () => {
+        console.log('wtf')
     }
 
     let [filter, setMyFilter] = useState<filterValueType>('All')
@@ -38,6 +50,7 @@ function App() {
                       minusTask={removeTask}
                       setFilters={setMyFilter}
                       plusTask={addTask}
+                      changeStatusHandler={changeStatus}
             />
         </div>
     );

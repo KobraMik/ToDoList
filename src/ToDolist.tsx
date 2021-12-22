@@ -14,34 +14,31 @@ type PropsType = {
     minusTask: (id: string) => void
     setFilters: (value: filterValueType) => void
     plusTask: (title: string) => void
+    changeStatusHandler: (taskId: string, isDone: boolean) => void
 }
 
 export function Todolist(props: PropsType) {
 
     const [title, setTitle] = useState('')
-
     const addTaskHadler = () => {
         props.plusTask(title)
         setTitle('')
     }
-
     const onChangeHadler = (event: ChangeEvent<HTMLInputElement>) => {
         setTitle(event.currentTarget.value)
     }
-
     const onKeyPressHadler = (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
             addTaskHadler()
         }
     }
-
     const tsarChangeHandler = (value: filterValueType) => {
         props.setFilters(value)
     }
-
     const minusTaskHandler = (id: string) => {
         props.minusTask(id)
     }
+
 
     return <div>
         <h3>{props.title}</h3>
@@ -51,17 +48,25 @@ export function Todolist(props: PropsType) {
                    onKeyPress={onKeyPressHadler}/>
             <button onClick={addTaskHadler}>+</button>
         </div>
-        {props.tasks.map(m => {
-            return (
-                <li key={m.id}>
-                    <input type="checkbox"
-                           checked={m.isDone}/>
-                    <span>{m.title}</span>
-                    <button onClick={() => minusTaskHandler(m.id)}>X</button>
-                    {/*<button onClick={() => props.minusTask(m.id)}>X</button>*/}
-                </li>
-            )
-        })}
+        <ul>
+            {props.tasks.map(m => {
+                const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+                    props.changeStatusHandler(m.id, e.currentTarget.checked)
+                }
+                return (
+                    <li key={m.id}>
+                        <input type="checkbox"
+                               checked={m.isDone}
+                               onChange={onChangeHandler}
+                        />
+                        <span>{m.title}</span>
+                        <button onClick={() => minusTaskHandler(m.id)}>X</button>
+                        {/*<button onClick={() => props.minusTask(m.id)}>X</button>*/}
+                    </li>
+                )
+
+            })}
+        </ul>
         <div>
             <button onClick={() => tsarChangeHandler('All')}>All</button>
             <button onClick={() => tsarChangeHandler('Active')}>Active</button>
