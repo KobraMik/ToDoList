@@ -15,6 +15,7 @@ type PropsType = {
     setFilters: (value: filterValueType) => void
     plusTask: (title: string) => void
     changeStatusHandler: (taskId: string, isDone: boolean) => void
+    filter: filterValueType
 }
 
 export function Todolist(props: PropsType) {
@@ -23,7 +24,7 @@ export function Todolist(props: PropsType) {
     const [error, setError] = useState('')
 
     const addTaskHadler = () => {
-        if (title.trim() !== ''){
+        if (title.trim() !== '') {
             props.plusTask(title)
             setTitle('')
         } else {
@@ -78,9 +79,9 @@ export function Todolist(props: PropsType) {
             })}
         </ul>
         <div>
-            <button onClick={() => tsarChangeHandler('All')}>All</button>
-            <button onClick={() => tsarChangeHandler('Active')}>Active</button>
-            <button onClick={() => tsarChangeHandler('Completed')}>Completed</button>
+            <button className={props.filter === 'All' ? "active-filter" : ""} onClick={() => tsarChangeHandler('All')}>All</button>
+            <button className={props.filter === 'Active' ? "active-filter" : ""} onClick={() => tsarChangeHandler('Active')}>Active</button>
+            <button className={props.filter === 'Completed' ? "active-filter" : ""} onClick={() => tsarChangeHandler('Completed')}>Completed</button>
             {/*<button onClick={() => props.setFilters('All')}>All</button>*/}
 
         </div>
