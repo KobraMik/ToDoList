@@ -24,12 +24,19 @@ export function TodolistWithRedux(props: PropsType) {
 
     const todolists = useSelector<AppRootStateType, TodolistType>(state => state.todolists
         .filter(todo=>todo.id === props.id)[0])
-    const tasks = useSelector<AppRootStateType, Array<TaskType>>(state => state.tasks[props.id])
+    let tasks = useSelector<AppRootStateType, Array<TaskType>>(state => state.tasks[props.id])
+
+    if (todolists.filter === "active") {
+        tasks = tasks.filter(t => t.isDone === false);
+    }
+    if (todolists.filter === "completed") {
+        tasks = tasks.filter(t => t.isDone === true);
+    }
 
     const dispatch = useDispatch()
 
     const addTask = (title: string) => {
-        dispatch(removeTaskAC(title, props.id))
+        dispatch(addTaskAC(title, props.id))
     }
 
     const removeTodolist = () => {
