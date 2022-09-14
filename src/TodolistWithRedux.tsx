@@ -1,11 +1,10 @@
 import React, {ChangeEvent} from 'react';
-import {FilterValuesType} from './App';
 import {AddItemForm} from './AddItemForm';
 import {EditableSpan} from './EditableSpan';
 import {Button, Checkbox, IconButton} from '@material-ui/core';
 import {Delete} from '@material-ui/icons';
 import {AppRootStateType} from "./state/ store";
-import {TasksStateType, TodolistType} from "./AppWithRedux";
+import {TodolistType} from "./AppWithRedux";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./state/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC} from "./state/todolists-reducer";
