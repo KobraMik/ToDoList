@@ -14,11 +14,7 @@ import LinearProgress from '@mui/material/LinearProgress';
 import { Menu } from '@mui/icons-material';
 import { ErrorSnackbar } from '../components/ErrorSnackbar/ErrorSnackbar'
 
-type PropsType = {
-    demo?: boolean
-}
-
-function App({demo = false}: PropsType) {
+function App() {
     const status = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status)
     return (
         <div className="App">
@@ -36,7 +32,7 @@ function App({demo = false}: PropsType) {
                 {status === 'loading' && <LinearProgress/>}
             </AppBar>
             <Container fixed>
-                <TodolistsList demo={demo}/>
+                <TodolistsList />
             </Container>
         </div>
     )

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {SyntheticEvent} from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,7 +17,7 @@ export function ErrorSnackbar() {
 
     const dispatch = useDispatch();
 
-    const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
+    const handleClose = (event?: Event | SyntheticEvent<any, Event>, reason?: string) => {
         if (reason === 'clickaway') {
             return;
         }
