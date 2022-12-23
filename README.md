@@ -4,7 +4,8 @@
 * Redux
 * TypeScript
 * TDD (Jest, Snapshot testing, Storybook)
-* RestAPI
+* RestAPI 
+  * Axios
 * MaterialUI
 * HTML/CSS
 * Functional components

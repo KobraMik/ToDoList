@@ -1,0 +1,8 @@
+.task{
+    display: flex;
+    justify-content: space-between;
+}
+
+.isDone {
+    opacity: 0.5;
+}

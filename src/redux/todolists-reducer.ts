@@ -1,6 +1,6 @@
-import {todolistsAPI, TodolistType} from '../../api/todolists-api'
+import {todolistAPI, TodolistType} from '../api/api'
 import {Dispatch} from 'redux'
-import {RequestStatusType, setAppStatusAC, SetAppStatusActionType} from '../../app/app-reducer'
+import {RequestStatusType, setAppStatusAC, SetAppStatusActionType} from './app-reducer'
 
 const initialState: Array<TodolistDomainType> = []
 
@@ -45,7 +45,7 @@ export const setTodolistsAC = (todolists: Array<TodolistType>) => ({type: 'SET-T
 export const fetchTodolistsTC = () => {
     return (dispatch: ThunkDispatch) => {
         dispatch(setAppStatusAC('loading'))
-        todolistsAPI.getTodolists()
+        todolistAPI.getTodolists()
             .then((res) => {
                 dispatch(setTodolistsAC(res.data))
                 dispatch(setAppStatusAC('succeeded'))
@@ -58,7 +58,7 @@ export const removeTodolistTC = (todolistId: string) => {
         dispatch(setAppStatusAC('loading'))
         //изменим статус конкретного тудулиста, чтобы он мог задизеблить что надо
         dispatch(changeTodolistEntityStatusAC(todolistId, 'loading'))
-        todolistsAPI.deleteTodolist(todolistId)
+        todolistAPI.deleteTodolist(todolistId)
             .then((res) => {
                 dispatch(removeTodolistAC(todolistId))
                 //скажем глобально приложению, что асинхронная операция завершена
@@ -69,7 +69,7 @@ export const removeTodolistTC = (todolistId: string) => {
 export const addTodolistTC = (title: string) => {
     return (dispatch: ThunkDispatch) => {
         dispatch(setAppStatusAC('loading'))
-        todolistsAPI.createTodolist(title)
+        todolistAPI.createTodolist(title)
             .then((res) => {
                 dispatch(addTodolistAC(res.data.data.item))
                 dispatch(setAppStatusAC('succeeded'))
@@ -78,7 +78,7 @@ export const addTodolistTC = (title: string) => {
 }
 export const changeTodolistTitleTC = (id: string, title: string) => {
     return (dispatch: Dispatch<ActionsType>) => {
-        todolistsAPI.updateTodolist(id, title)
+        todolistAPI.updateTodolist(id, title)
             .then((res) => {
                 dispatch(changeTodolistTitleAC(id, title))
             })

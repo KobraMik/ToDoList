@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios'
+import axios, {AxiosResponse} from 'axios'
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
@@ -9,7 +9,7 @@ const instance = axios.create({
 })
 
 // api
-export const todolistsAPI = {
+export const todolistAPI = {
     getTodolists() {
         return instance.get<TodolistType[]>('todo-lists');
     },
@@ -22,6 +22,9 @@ export const todolistsAPI = {
     updateTodolist(id: string, title: string) {
         return instance.put<{ title: string }, AxiosResponse<ResponseType>>(`todo-lists/${id}`, {title});
     },
+}
+
+export const taskAPI = {
     getTasks(todolistId: string) {
         return instance.get<GetTasksResponse>(`todo-lists/${todolistId}/tasks`);
     },
@@ -33,6 +36,24 @@ export const todolistsAPI = {
     },
     updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType) {
         return instance.put<UpdateTaskModelType, AxiosResponse<ResponseType<{ item: TaskType }>>>(`todo-lists/${todolistId}/tasks/${taskId}`, model);
+    }
+}
+
+export const authAPI = {
+    me() {
+        return instance.get(`auth/me`)
+    },
+    login(email: string, password: string, rememberMe: boolean, captcha: string | null = null) {
+        return instance.post(`auth/login`, {email, password, rememberMe, captcha})
+    },
+    logout() {
+        return instance.delete(`auth/login`)
+    }
+}
+
+export const securityAPI = {
+    getCaptchaUrl() {
+        return instance.get(`security/get-captcha-url`)
     }
 }
 

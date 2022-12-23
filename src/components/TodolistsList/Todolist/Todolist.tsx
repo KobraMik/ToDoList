@@ -1,18 +1,20 @@
 import React, {useCallback, useEffect} from 'react'
-import {AddItemForm} from '../../../components/AddItemForm/AddItemForm'
-import Button from '@mui/material/Button';
-import {Task} from './Task/Task'
-import {TaskStatuses, TaskType} from '../../../api/todolists-api'
+import {AddItemForm} from '../../../features/AddItemForm/AddItemForm'
+// import Button from '@mui/material/Button';
+import {Task} from '../../Task/Task'
+import {TaskStatuses, TaskType} from '../../../api/api'
 import {
     changeTodolistFilterAC,
     changeTodolistTitleTC,
     FilterValuesType,
     removeTodolistTC,
     TodolistDomainType
-} from '../todolists-reducer'
+} from '../../../redux/todolists-reducer'
 import {useDispatch} from 'react-redux'
-import {addTaskTC, fetchTasksTC} from '../tasks-reducer'
-import {TitleForTodolist} from '../../../components/TitleForTodolist';
+import {addTaskTC, fetchTasksTC} from '../../../redux/tasks-reducer'
+import {TitleForTodolist} from '../../../features/TitleForTodolist';
+// @ts-ignore
+import style from './Todolist.module.css'
 
 type PropsType = {
     todolist: TodolistDomainType
@@ -50,27 +52,39 @@ export const Todolist = React.memo(({todolist, tasks}: PropsType) => {
         <AddItemForm addItem={addTask} disabled={todolist.entityStatus === 'loading'}/>
         <div>
             {
-                tasksForTodolist.map(t => <Task key={t.id} task={t} todolistId={todolist.id}
-                />)
+                tasksForTodolist.map(t => <Task key={t.id} task={t} todolistId={todolist.id}/>)
             }
         </div>
-        <div style={{paddingTop: '10px'}}>
-            <Button variant={todolist.filter === 'all' ? 'outlined' : 'text'}
-                    onClick={onAllClickHandler}
+        <div className={style.buttons}>
+            <button onClick={onAllClickHandler}
                     color={'primary'}
             >
                 All
-            </Button>
-            <Button variant={todolist.filter === 'active' ? 'outlined' : 'text'}
-                    onClick={onActiveClickHandler}
+            </button>
+            <button onClick={onActiveClickHandler}
                     color={'primary'}>
                 Active
-            </Button>
-            <Button variant={todolist.filter === 'completed' ? 'outlined' : 'text'}
-                    onClick={onCompletedClickHandler}
+            </button>
+            <button onClick={onCompletedClickHandler}
                     color={'primary'}>
                 Completed
-            </Button>
+            </button>
+            {/*<Button variant={todolist.filter === 'all' ? 'contained' : 'outlined'}*/}
+            {/*        onClick={onAllClickHandler}*/}
+            {/*        color={'primary'}*/}
+            {/*>*/}
+            {/*    All*/}
+            {/*</Button>*/}
+            {/*<Button variant={todolist.filter === 'active' ? 'contained' : 'outlined'}*/}
+            {/*        onClick={onActiveClickHandler}*/}
+            {/*        color={'primary'}>*/}
+            {/*    Active*/}
+            {/*</Button>*/}
+            {/*<Button variant={todolist.filter === 'completed' ? 'contained' : 'outlined'}*/}
+            {/*        onClick={onCompletedClickHandler}*/}
+            {/*        color={'primary'}>*/}
+            {/*    Completed*/}
+            {/*</Button>*/}
         </div>
     </>
 })
