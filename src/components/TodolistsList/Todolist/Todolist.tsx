@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect} from 'react'
 import {AddItemForm} from '../../../features/AddItemForm/AddItemForm'
-// import Button from '@mui/material/Button';
+import Button from '@mui/material/Button';
 import {Task} from '../../Task/Task'
 import {TaskStatuses, TaskType} from '../../../api/api'
 import {
@@ -10,11 +10,13 @@ import {
     removeTodolistTC,
     TodolistDomainType
 } from '../../../redux/todolists-reducer'
-import {useDispatch} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import {addTaskTC, fetchTasksTC} from '../../../redux/tasks-reducer'
 import {TitleForTodolist} from '../../../features/TitleForTodolist';
 // @ts-ignore
 import style from './Todolist.module.css'
+import {AppRootStateType} from '../../../redux/store';
+import {authStateType} from '../../../redux/auth-reducer';
 
 type PropsType = {
     todolist: TodolistDomainType
@@ -23,10 +25,7 @@ type PropsType = {
 
 export const Todolist = React.memo(({todolist, tasks}: PropsType) => {
     const dispatch = useDispatch()
-
-    useEffect(() => {
-        dispatch(fetchTasksTC(todolist.id))
-    }, [])
+    // const {isAuth} = useSelector<AppRootStateType, authStateType>((state) => state.auth)
 
     const addTask = useCallback((title: string) => dispatch(addTaskTC(title, todolist.id)), [todolist.id])
     const removeTodolist = useCallback((id: string) => dispatch(removeTodolistTC(id)), [todolist.id])
@@ -45,46 +44,37 @@ export const Todolist = React.memo(({todolist, tasks}: PropsType) => {
         tasksForTodolist = tasks.filter(t => t.status === TaskStatuses.Completed)
     }
 
+    useEffect(() => {
+        dispatch(fetchTasksTC(todolist.id))
+    }, [todolist])
+
     return <>
         <TitleForTodolist value={todolist.title} onChange={changeTodolistTitle} id={todolist.id}
                           entityStatus={todolist.entityStatus}
                           removeTodolist={removeTodolist}/>
         <AddItemForm addItem={addTask} disabled={todolist.entityStatus === 'loading'}/>
         <div>
-            {
+            {tasksForTodolist &&
                 tasksForTodolist.map(t => <Task key={t.id} task={t} todolistId={todolist.id}/>)
             }
         </div>
         <div className={style.buttons}>
-            <button onClick={onAllClickHandler}
+            <Button variant={todolist.filter === 'all' ? 'contained' : 'outlined'}
+                    onClick={onAllClickHandler}
                     color={'primary'}
             >
                 All
-            </button>
-            <button onClick={onActiveClickHandler}
+            </Button>
+            <Button variant={todolist.filter === 'active' ? 'contained' : 'outlined'}
+                    onClick={onActiveClickHandler}
                     color={'primary'}>
                 Active
-            </button>
-            <button onClick={onCompletedClickHandler}
+            </Button>
+            <Button variant={todolist.filter === 'completed' ? 'contained' : 'outlined'}
+                    onClick={onCompletedClickHandler}
                     color={'primary'}>
                 Completed
-            </button>
-            {/*<Button variant={todolist.filter === 'all' ? 'contained' : 'outlined'}*/}
-            {/*        onClick={onAllClickHandler}*/}
-            {/*        color={'primary'}*/}
-            {/*>*/}
-            {/*    All*/}
-            {/*</Button>*/}
-            {/*<Button variant={todolist.filter === 'active' ? 'contained' : 'outlined'}*/}
-            {/*        onClick={onActiveClickHandler}*/}
-            {/*        color={'primary'}>*/}
-            {/*    Active*/}
-            {/*</Button>*/}
-            {/*<Button variant={todolist.filter === 'completed' ? 'contained' : 'outlined'}*/}
-            {/*        onClick={onCompletedClickHandler}*/}
-            {/*        color={'primary'}>*/}
-            {/*    Completed*/}
-            {/*</Button>*/}
+            </Button>
         </div>
     </>
 })

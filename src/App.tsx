@@ -3,11 +3,11 @@ import {TodolistsList} from './components/TodolistsList/TodolistsList'
 import {useDispatch, useSelector} from 'react-redux'
 import {AppRootStateType} from './redux/store'
 import {RequestStatusType} from './redux/app-reducer'
-// import AppBar from '@mui/material/AppBar';
-// import Toolbar from '@mui/material/Toolbar';
-// import Button from '@mui/material/Button';
-// import Container from '@mui/material/Container';
-// import LinearProgress from '@mui/material/LinearProgress';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
+import LinearProgress from '@mui/material/LinearProgress';
 import {ErrorSnackbar} from './features/ErrorSnackbar/ErrorSnackbar'
 import {Link, Route, Routes} from 'react-router-dom';
 import Login from './components/Login/Login';
@@ -24,39 +24,32 @@ function App() {
 
     return (
         <>
-            {/*<ErrorSnackbar/>*/}
-            {/*<AppBar position="relative">*/}
-            {/*<Toolbar style={{display: 'flex', justifyContent: 'flex-end'}}>*/}
-            <Link to={'/login'}>
-                {/*<Button color="inherit" variant="outlined">Login</Button>*/}
-                {
-                    isAuth ?
-                        <div style={{height: '40px', backgroundColor: 'blue'}}>
-                            <button onClick={() => {
-                                dispatch(logout())
-                            }}>Logout
-                            </button>
-                        </div>
-                        :
-                        <div style={{height: '40px', backgroundColor: 'blue'}}></div>
+            <ErrorSnackbar/>
+            <AppBar position="relative">
+                <Toolbar style={{display: 'flex', justifyContent: 'flex-end'}}>
+                    <Link to={'/login'} style={{color: 'white', textDecoration: 'none'}}>
+                        {isAuth &&
+                            <Button color="inherit" variant="outlined"
+                                    onClick={() => {
+                                        dispatch(logout())
+                                    }}
+                            >Logout</Button>}
+                    </Link>
+                </Toolbar>
+                {status === 'loading' &&
+                    <LinearProgress style={{
+                        position: 'absolute',
+                        bottom: '-4px',
+                        width: '100%'
+                    }}/>
                 }
-            </Link>
-            {/*</Toolbar>*/}
-            {status === 'loading' &&
-                // <LinearProgress style={{
-                //     position: 'absolute',
-                //     bottom: '-4px',
-                //     width: '100%'
-                // }}/>
-                <div>LOADING...</div>
-            }
-            {/*</AppBar>*/}
-            {/*<Container fixed style={{margin: '20px 0'}}>*/}
-            <Routes>
-                <Route path="/" element={<TodolistsList/>}/>
-                <Route path="/login" element={<Login/>}/>
-            </Routes>
-            {/*</Container>*/}
+            </AppBar>
+            <Container fixed style={{margin: '20px auto'}}>
+                <Routes>
+                    <Route path="/" element={<TodolistsList/>}/>
+                    <Route path="/login" element={<Login/>}/>
+                </Routes>
+            </Container>
         </>
     )
 }

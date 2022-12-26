@@ -1,94 +1,108 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Formik} from 'formik';
-import {authStateType, getAuthUserData, login} from '../../redux/auth-reducer';
+import {authStateType, login} from '../../redux/auth-reducer';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../redux/store';
-import {Navigate, redirect} from 'react-router-dom';
-// import {Button, Checkbox, FormControlLabel, FormGroup, Grid, TextField} from '@mui/material';
+import {Navigate} from 'react-router-dom';
+import style from './Login.module.css'
+import {Button, Checkbox, FormControlLabel, FormGroup, Grid, TextField} from '@mui/material';
 
 const Login = () => {
     const dispatch = useDispatch()
-    const {isAuth} = useSelector<AppRootStateType, authStateType>((state) => state.auth)
+    const {isAuth, captchaUrl, error} = useSelector<AppRootStateType, authStateType>((state) => state.auth)
 
     if (isAuth) {
         return <Navigate to={'/'}/>
     }
 
     return (
-        // <Grid container columns={6} style={{justifyContent: 'center'}}>
-        <Formik
-            initialValues={{email: '', password: '', rememberMe: false}}
-            validate={values => {
-                const errors = {};
-                if (!values.email) {
-                    // @ts-ignore
-                    errors.email = 'Required';
-                }
-            }}
-            onSubmit={(values) => {
-                dispatch(login(values.email, values.password, values.rememberMe, null))
-            }}
-        >
-            {({
-                  values,
-                  errors,
-                  touched,
-                  handleChange,
-                  handleBlur,
-                  handleSubmit,
-                  // isSubmitting,
-              }) => (
-                <form onSubmit={handleSubmit}>
-                    <div>Your email</div>
-                    {/*<TextField*/}
-                    {/*    type="email"*/}
-                    {/*    name="email"*/}
-                    {/*    onChange={handleChange}*/}
-                    {/*    onBlur={handleBlur}*/}
-                    {/*    value={values.email}*/}
-                    {/*/>*/}
-                    <input type="email"
-                           name="email"
-                           onChange={handleChange}
-                           onBlur={handleBlur}
-                           value={values.email}/>
+        <Grid container columns={6} style={{justifyContent: 'center'}}>
+            <div className={style.text}>Hello! You can register<a href="https://social-network.samuraijs.com/"
+                                                                  target="_blank">here</a>
+                or use this data to log in:
+                <div className={style.dataText}>
+                    <div>Email: <span>free@samuraijs.com</span></div>
+                    <div>Password: <span>free</span></div>
+                </div>
+            </div>
+            <Formik
+                initialValues={{email: '', password: '', rememberMe: false, captchaUrl: undefined}}
+                validate={values => {
+                    const errors = {};
+                    if (!values.email) {
+                        // @ts-ignore
+                        errors.email = 'Required';
+                    }
+                }}
+                onSubmit={(values) => {
+                    dispatch(login(values.email, values.password, values.rememberMe, values.captchaUrl))
+                }}
+            >
+                {({
+                      values,
+                      errors,
+                      touched,
+                      handleChange,
+                      handleBlur,
+                      handleSubmit,
+                  }) => (
+                    <form onSubmit={handleSubmit}>
+                        <div>Your email</div>
+                        <TextField
+                            type="email"
+                            name="email"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.email}
+                        />
 
-                    {errors.email && touched.email && errors.email}
-                    <div>Your password</div>
-                    {/*<TextField*/}
-                    {/*    type="password"*/}
-                    {/*    name="password"*/}
-                    {/*    onChange={handleChange}*/}
-                    {/*    onBlur={handleBlur}*/}
-                    {/*    value={values.password}*/}
-                    {/*/>*/}
-                    <input type="password"
-                           name="password"
-                           onChange={handleChange}
-                           onBlur={handleBlur}
-                           value={values.password}/>
+                        {errors.email && touched.email && errors.email}
+                        <div>Your password</div>
+                        <TextField
+                            type="password"
+                            name="password"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.password}
+                        />
 
-                    {errors.password && touched.password && errors.password}
-                    {/*<FormGroup>*/}
-                    {/*    <FormControlLabel control={<Checkbox*/}
-                    {/*        name="rememberMe"*/}
-                    {/*        onChange={handleChange}*/}
-                    {/*        checked={values.rememberMe}*/}
-                    {/*    />} label="Remember me"/>*/}
-                    {/*</FormGroup>*/}
-                    <input type="checkbox"
-                           name="rememberMe"
-                           onChange={handleChange}
-                           checked={values.rememberMe}
-                    />
-                    {/*<Button type="submit" variant="contained">*/}
-                    {/*    Submit*/}
-                    {/*</Button>*/}
-                    <button type="submit">Submit</button>
-                </form>
-            )}
-        </Formik>
-        // </Grid>
+                        {errors.password && touched.password && errors.password}
+                        <FormGroup>
+                            <FormControlLabel control={<Checkbox
+                                name="rememberMe"
+                                onChange={handleChange}
+                                checked={values.rememberMe}
+                            />} label="Remember me"/>
+                        </FormGroup>
+
+                        {captchaUrl && <div>
+                            <p style={{textAlign: 'center'}}><img src={captchaUrl} alt="captcha"/></p>
+                            <TextField
+                                type="text"
+                                name="captchaUrl"
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                value={values.captchaUrl}
+                            />
+
+                        </div>}
+
+                        {error &&
+                            <div style={{
+                                border: '#f32020 2px solid',
+                                padding: '10px',
+                                color: '#fc8d8d',
+                                borderRadius: '7px',
+                                margin: '10px 0'
+                            }}><p style={{textAlign: 'center', margin: '0'}}>{error}</p></div>
+                        }
+                        <Button type="submit" variant="contained">
+                            Submit
+                        </Button>
+                    </form>
+                )}
+            </Formik>
+        </Grid>
     );
 };
 

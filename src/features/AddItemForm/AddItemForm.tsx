@@ -1,7 +1,7 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
-// import TextField from '@mui/material/TextField';
-// import IconButton from '@mui/material/IconButton';
-// import { AddBox } from '@mui/icons-material';
+import TextField from '@mui/material/TextField';
+import IconButton from '@mui/material/IconButton';
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void
@@ -34,25 +34,16 @@ export const AddItemForm = React.memo(function ({addItem, disabled = false}: Add
         }
     }
 
-    return <div>
-        {/*<TextField variant="outlined"*/}
-        {/*           disabled={disabled}*/}
-        {/*           error={!!error}*/}
-        {/*           value={title}*/}
-        {/*           onChange={onChangeHandler}*/}
-        {/*           onKeyPress={onKeyPressHandler}*/}
-        {/*           label="Title"*/}
-        {/*           helperText={error}*/}
-        {/*/> */}
-        <input type="text"
-               disabled={disabled}
-               value={title}
-               onChange={onChangeHandler}
-               onKeyPress={onKeyPressHandler}
+    return <div style={{height: '100%'}}>
+        <TextField variant="outlined"
+                   disabled={disabled}
+                   error={!!error}
+                   value={title}
+                   onChange={onChangeHandler}
+                   onKeyPress={onKeyPressHandler}
+                   label="Title"
+                   helperText={error}
         />
-        {/*<IconButton color="primary" onClick={addItemHandler} disabled={disabled}>*/}
-        {/*    <AddBox/>*/}
-        {/*</IconButton>*/}
-        <div onClick={addItemHandler}>+</div>
+        <IconButton onClick={addItemHandler} disabled={disabled} style={{margin: '8px 5px'}}><AddOutlinedIcon color="primary"/></IconButton>
     </div>
 })

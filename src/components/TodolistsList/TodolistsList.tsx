@@ -3,8 +3,8 @@ import {useDispatch, useSelector} from 'react-redux'
 import {AppRootStateType} from '../../redux/store'
 import {addTodolistTC, fetchTodolistsTC, TodolistDomainType} from '../../redux/todolists-reducer'
 import {TasksStateType} from '../../redux/tasks-reducer'
-// import Grid from '@mui/material/Grid';
-// import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
 import {AddItemForm} from '../../features/AddItemForm/AddItemForm'
 import {Todolist} from './Todolist/Todolist'
 import {authStateType} from '../../redux/auth-reducer';
@@ -16,11 +16,9 @@ export const TodolistsList: React.FC = () => {
     const {isAuth} = useSelector<AppRootStateType, authStateType>((state) => state.auth)
     const dispatch = useDispatch()
 
-    console.log(isAuth)
-
     useEffect(() => {
         dispatch(fetchTodolistsTC())
-    }, [])
+    }, [isAuth])
 
     const addTodolist = useCallback((title: string) => {
         dispatch(addTodolistTC(title))
@@ -31,36 +29,31 @@ export const TodolistsList: React.FC = () => {
             isAuth
                 ?
                 <>
-                    <AddItemForm addItem={addTodolist}/>
-                    {/*<Grid container spacing={3}>*/}
-                    <div style={{display: 'flex'}}>
-                        {
-                            todolists.map(tl => {
+                    <Grid container style={{margin: '40px 10px'}}>
+                        <AddItemForm addItem={addTodolist}/>
+                    </Grid>
+                    <Grid container>
+                        <div style={{display: 'flex'}}>
+                            {todolists.map(tl => {
                                 let tasksForTodolist = tasks[tl.id]
 
-                                // return <Grid item key={tl.id}>
-                                //     <Paper style={{padding: '10px'}}>
-                                return <div style={{
-                                    width: '250px',
-                                    border: '1px solid',
-                                    padding: '10px'
-                                }}
-                                            key={tl.id}>
-                                    <Todolist
-                                        todolist={tl}
-                                        tasks={tasksForTodolist}
-                                    />
-                                </div>
-                                //     </Paper>
-                                // </Grid>
+                                if (tasksForTodolist) {
+                                    return <Grid item key={tl.id}>
+                                        <Paper style={{padding: '10px', margin: '0 10px', minWidth: "280px"}}>
+                                            <Todolist
+                                                todolist={tl}
+                                                tasks={tasksForTodolist}
+                                            />
+                                        </Paper>
+                                    </Grid>
+                                }
                             })
-                        }
-                    </div>
-                    {/*</Grid>*/}
+                            }
+                        </div>
+                    </Grid>
                 </>
                 :
                 <Login/>
         }
-
     </>
 }
