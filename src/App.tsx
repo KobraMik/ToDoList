@@ -48,8 +48,8 @@ function App() {
             </AppBar>
             <Container fixed style={{margin: '20px auto'}}>
                 <Routes>
-                    <Route path="/" element={<TodolistsList/>}/>
-                    <Route path="/login" element={<Login/>}/>
+                    <Route path={process.env.PUBLIC_URL + '/'} element={<TodolistsList/>}/>
+                    <Route path={process.env.PUBLIC_URL + '/login'} element={<Login/>}/>
                 </Routes>
             </Container>
         </>
