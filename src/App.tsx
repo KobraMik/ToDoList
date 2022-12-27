@@ -28,7 +28,7 @@ function App() {
             <AppBar position="relative">
                 <Container fixed>
                     <Toolbar style={{display: 'flex', justifyContent: 'flex-end'}}>
-                        <Link to={'/login'} style={{color: 'white', textDecoration: 'none'}}>
+                        <Link to={process.env.PUBLIC_URL + '/login'} style={{color: 'white', textDecoration: 'none'}}>
                             {isAuth &&
                                 <Button color="inherit" variant="outlined"
                                         onClick={() => {

@@ -1,3 +1,7 @@
+## To do list SPA
+
+Link to **[gh-pages](https://michaelnovickiy.github.io/ToDoList/)**
+
 ## Stack:
 
 * React
