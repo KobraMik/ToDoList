@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../redux/store';
 import {Navigate} from 'react-router-dom';
 import style from './Login.module.css'
-import {Button, Checkbox, FormControlLabel, FormGroup, Grid, TextField} from '@mui/material';
+import {Button, Checkbox, FormControlLabel, FormGroup, TextField} from '@mui/material';
 
 const Login = () => {
     const dispatch = useDispatch()
@@ -16,7 +16,7 @@ const Login = () => {
     }
 
     return (
-        <Grid container columns={6} style={{justifyContent: 'center'}}>
+        <div className={style.container}>
             <div className={style.text}>Hello! You can register<a href="https://social-network.samuraijs.com/"
                                                                   target="_blank">here</a>
                 or use this data to log in:
@@ -47,7 +47,7 @@ const Login = () => {
                       handleSubmit,
                   }) => (
                     <form onSubmit={handleSubmit}>
-                        <div>Your email</div>
+                        <div className={style.textFild}>Your email</div>
                         <TextField
                             type="email"
                             name="email"
@@ -57,7 +57,7 @@ const Login = () => {
                         />
 
                         {errors.email && touched.email && errors.email}
-                        <div>Your password</div>
+                        <div className={style.textFild}>Your password</div>
                         <TextField
                             type="password"
                             name="password"
@@ -102,7 +102,7 @@ const Login = () => {
                     </form>
                 )}
             </Formik>
-        </Grid>
+        </div>
     );
 };
 

@@ -1,6 +1,11 @@
-.task{
+.task {
     display: flex;
     justify-content: space-between;
+}
+
+.text {
+    display: flex;
+    align-items: center;
 }
 
 .isDone {

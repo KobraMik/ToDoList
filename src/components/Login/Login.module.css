@@ -1,3 +1,11 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 0 auto;
+}
+
 .title {
     width: 100px;
     margin: 0 auto;
@@ -12,8 +20,10 @@
 }
 
 .text a {
-    margin: 0 10px;
+    margin: 0 6px;
     font-weight: 600;
+    text-decoration: none;
+    color: inherit;
 }
 
 .dataText {
@@ -22,4 +32,9 @@
 
 .dataText div span {
     font-weight: 600;
+}
+
+.textFild {
+    margin: 10px 0;
+    font-size: 20px;
 }

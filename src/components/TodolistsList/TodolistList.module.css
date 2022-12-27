@@ -1,0 +1,31 @@
+.title {
+    margin-left: 16px;
+}
+
+.todolists {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 100%;
+    justify-items: center;
+}
+
+@media (max-width: 1199px) {
+    .title {
+        margin-left: 32px;
+    }
+    .todolists {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+@media (max-width: 899px) {
+    .title {
+        margin-left: 96px;
+    }
+    .todolists {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+

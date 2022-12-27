@@ -9,6 +9,7 @@ import {AddItemForm} from '../../features/AddItemForm/AddItemForm'
 import {Todolist} from './Todolist/Todolist'
 import {authStateType} from '../../redux/auth-reducer';
 import Login from '../Login/Login'
+import style from './TodolistList.module.css'
 
 export const TodolistsList: React.FC = () => {
     const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
@@ -29,17 +30,17 @@ export const TodolistsList: React.FC = () => {
             isAuth
                 ?
                 <>
-                    <Grid container style={{margin: '40px 10px'}}>
-                        <AddItemForm addItem={addTodolist}/>
+                    <Grid container className={style.title}>
+                        <AddItemForm addItem={addTodolist} label="Title for to do list"/>
                     </Grid>
                     <Grid container>
-                        <div style={{display: 'flex'}}>
+                        <div className={style.todolists}>
                             {todolists.map(tl => {
                                 let tasksForTodolist = tasks[tl.id]
 
                                 if (tasksForTodolist) {
                                     return <Grid item key={tl.id}>
-                                        <Paper style={{padding: '10px', margin: '0 10px', minWidth: "280px"}}>
+                                        <Paper style={{padding: '10px', margin: '20px', width: '330px'}}>
                                             <Todolist
                                                 todolist={tl}
                                                 tasks={tasksForTodolist}
@@ -47,8 +48,7 @@ export const TodolistsList: React.FC = () => {
                                         </Paper>
                                     </Grid>
                                 }
-                            })
-                            }
+                            })}
                         </div>
                     </Grid>
                 </>

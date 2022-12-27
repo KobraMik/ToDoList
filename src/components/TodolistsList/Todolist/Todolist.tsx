@@ -10,13 +10,11 @@ import {
     removeTodolistTC,
     TodolistDomainType
 } from '../../../redux/todolists-reducer'
-import {useDispatch, useSelector} from 'react-redux'
+import {useDispatch} from 'react-redux'
 import {addTaskTC, fetchTasksTC} from '../../../redux/tasks-reducer'
 import {TitleForTodolist} from '../../../features/TitleForTodolist';
 // @ts-ignore
 import style from './Todolist.module.css'
-import {AppRootStateType} from '../../../redux/store';
-import {authStateType} from '../../../redux/auth-reducer';
 
 type PropsType = {
     todolist: TodolistDomainType
@@ -25,7 +23,6 @@ type PropsType = {
 
 export const Todolist = React.memo(({todolist, tasks}: PropsType) => {
     const dispatch = useDispatch()
-    // const {isAuth} = useSelector<AppRootStateType, authStateType>((state) => state.auth)
 
     const addTask = useCallback((title: string) => dispatch(addTaskTC(title, todolist.id)), [todolist.id])
     const removeTodolist = useCallback((id: string) => dispatch(removeTodolistTC(id)), [todolist.id])
@@ -48,11 +45,12 @@ export const Todolist = React.memo(({todolist, tasks}: PropsType) => {
         dispatch(fetchTasksTC(todolist.id))
     }, [todolist])
 
-    return <>
+    return <div className={style.todolist}>
         <TitleForTodolist value={todolist.title} onChange={changeTodolistTitle} id={todolist.id}
                           entityStatus={todolist.entityStatus}
-                          removeTodolist={removeTodolist}/>
-        <AddItemForm addItem={addTask} disabled={todolist.entityStatus === 'loading'}/>
+                          removeTodolist={removeTodolist}
+        />
+        <AddItemForm addItem={addTask} disabled={todolist.entityStatus === 'loading'} label="Title for task"/>
         <div>
             {tasksForTodolist &&
                 tasksForTodolist.map(t => <Task key={t.id} task={t} todolistId={todolist.id}/>)
@@ -76,7 +74,7 @@ export const Todolist = React.memo(({todolist, tasks}: PropsType) => {
                 Completed
             </Button>
         </div>
-    </>
+    </div>
 })
 
 

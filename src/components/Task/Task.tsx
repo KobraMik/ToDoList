@@ -6,6 +6,8 @@ import Checkbox from '@mui/material/Checkbox';
 import {TaskStatuses, TaskType} from '../../api/api'
 import {removeTaskTC, updateTaskTC} from '../../redux/tasks-reducer';
 import {useDispatch} from 'react-redux';
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
+import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
 // @ts-ignore
 import style from './Task.module.css'
 
@@ -25,10 +27,11 @@ export const Task = React.memo(({task, todolistId}: TaskPropsType) => {
 
     return <div key={task.id}
                 className={style.task + ' ' + `${task.status === TaskStatuses.Completed ? `${style.isDone}` : ''}`}>
-        <div>
+        <div className={style.text}>
             <Checkbox
                 checked={task.status === TaskStatuses.Completed}
-                color="primary"
+                icon={<RadioButtonUncheckedIcon/>} checkedIcon={<RadioButtonCheckedIcon/>}
+                color="default"
                 onChange={(e) => {
                     changeStatus(task.id, e.currentTarget.checked, todolistId)
                 }}

@@ -1,4 +1,5 @@
 import {authAPI, securityAPI} from '../api/api';
+import {setAppStatusAC} from './app-reducer';
 
 //types
 const SET_USER_DATA = 'AUTH_SET_USER_DATA'
@@ -59,6 +60,7 @@ export const setError = (errorMessage: string): any => ({type: SET_ERROR, payloa
 
 //thanks
 export const getAuthUserData = () => async (dispatch: any) => {
+    dispatch(setAppStatusAC('loading'))
     let response = await authAPI.me();
     // @ts-ignore
     if (response.data.resultCode === 0) {
@@ -66,9 +68,11 @@ export const getAuthUserData = () => async (dispatch: any) => {
         let {id, login, email} = response.data.data;
         dispatch(setAuthUserData(id, email, login, true))
     }
+    dispatch(setAppStatusAC('idle'))
 }
 
 export const login = (email: string, password: string, rememberMe: boolean, captcha: any) => async (dispatch: any) => {
+    dispatch(setAppStatusAC('loading'))
     const response = await authAPI.login(email, password, rememberMe, captcha)
     // @ts-ignore
     if (response.data.resultCode === 0) {
@@ -82,20 +86,25 @@ export const login = (email: string, password: string, rememberMe: boolean, capt
         let message = response.data.messages.length > 0 ? response.data.messages[0] : 'Some error'
         dispatch(setError(message))
     }
+    dispatch(setAppStatusAC('idle'))
 }
 
 export const logout = () => async (dispatch: any) => {
+    dispatch(setAppStatusAC('loading'))
     const response = await authAPI.logout()
     // @ts-ignore
     if (response.data.resultCode === 0) {
         dispatch(setAuthUserData(null, null, null, false))
     }
     dispatch(setError(''))
+    dispatch(setAppStatusAC('idle'))
 }
 
 export const getCaptchaUrl = () => async (dispatch: any) => {
+    dispatch(setAppStatusAC('loading'))
     const response = await securityAPI.getCaptchaUrl()
     // @ts-ignore
     const captchaUrl = response.data.url
     dispatch(getCaptchaUrlSuccess(captchaUrl))
+    dispatch(setAppStatusAC('idle'))
 }

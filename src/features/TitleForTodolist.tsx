@@ -18,8 +18,8 @@ export const TitleForTodolist = React.memo(({
                                                 value,
                                                 onChange
                                             }: EditableSpanPropsType) => {
-    return <h3>
-        <EditableText value={value} onChange={onChange}/>
+    return <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '10px 5px'}}>
+        <span style={{fontSize: '20px', fontWeight: '700'}}><EditableText value={value} onChange={onChange}/></span>
         <IconButton onClick={() => removeTodolist(id)} disabled={entityStatus === 'loading'}><ClearIcon/></IconButton>
-    </h3>
+    </div>
 });

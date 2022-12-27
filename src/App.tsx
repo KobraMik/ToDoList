@@ -26,23 +26,25 @@ function App() {
         <>
             <ErrorSnackbar/>
             <AppBar position="relative">
-                <Toolbar style={{display: 'flex', justifyContent: 'flex-end'}}>
-                    <Link to={'/login'} style={{color: 'white', textDecoration: 'none'}}>
-                        {isAuth &&
-                            <Button color="inherit" variant="outlined"
-                                    onClick={() => {
-                                        dispatch(logout())
-                                    }}
-                            >Logout</Button>}
-                    </Link>
-                </Toolbar>
-                {status === 'loading' &&
-                    <LinearProgress style={{
-                        position: 'absolute',
-                        bottom: '-4px',
-                        width: '100%'
-                    }}/>
-                }
+                <Container fixed>
+                    <Toolbar style={{display: 'flex', justifyContent: 'flex-end'}}>
+                        <Link to={'/login'} style={{color: 'white', textDecoration: 'none'}}>
+                            {isAuth &&
+                                <Button color="inherit" variant="outlined"
+                                        onClick={() => {
+                                            dispatch(logout())
+                                        }}
+                                >Logout</Button>}
+                        </Link>
+                    </Toolbar>
+                    {status === 'loading' &&
+                        <LinearProgress style={{
+                            position: 'absolute',
+                            bottom: '-4px',
+                            width: '100%'
+                        }}/>
+                    }
+                </Container>
             </AppBar>
             <Container fixed style={{margin: '20px auto'}}>
                 <Routes>
